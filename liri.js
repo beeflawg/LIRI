@@ -49,7 +49,7 @@ if (process.argv[2] === "concert-this") {
       console.log(bands);
       console.log("Venue: " + bandData[0].venue.name)
       console.log("Venue Location: " + bandData[0].venue.city + " " + bandData[0].venue.country)
-      console.log("Date of Event: " + bandData[0].datetime)
+      console.log("Date of Event: " + moment(bandData[0].datetime).format("MM/DD/YYYY"))
      
     }
   });
