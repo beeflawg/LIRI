@@ -43,15 +43,14 @@ if (process.argv[2] === "concert-this") {
 
 
     if (!error && response.statusCode === 200) {
-      
+      var bandData = JSON.parse(body)
       //console log band and event information
       console.log(queryBand);
       console.log(bands);
-      // console.log(JSON.parse(body))
-      console.log("Venue: " + body[2].venue)
-      // console.log("Venue Location: " + body.venue.city + " " + body.venue.country)
-      // console.log("Date of Event: " + body.venue)
-      // console.log(body);
+      console.log("Venue: " + bandData[0].venue.name)
+      console.log("Venue Location: " + bandData[0].venue.city + " " + bandData[0].venue.country)
+      console.log("Date of Event: " + bandData[0].datetime)
+     
     }
   });
 }
