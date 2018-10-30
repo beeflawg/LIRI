@@ -15,7 +15,7 @@ var nodeArgs = process.argv;
 var bands = "";
 var movies = "";
 var songs = "";
-
+var args = "";
 for (var i = 3; i < nodeArgs.length; i++) {
 
   if (i > 3 && i < nodeArgs.length) {
@@ -23,6 +23,7 @@ for (var i = 3; i < nodeArgs.length; i++) {
     movies = movies + " " + nodeArgs[i];
     bands = bands + "%20" + nodeArgs[i];
     songs = songs + " " + nodeArgs[i];
+    args = args + " " + nodeArgs[i];
   }
 
   else {
@@ -30,6 +31,7 @@ for (var i = 3; i < nodeArgs.length; i++) {
     movies += nodeArgs[i];
     bands += nodeArgs[i];
     songs += nodeArgs[i];
+    args += nodeArgs[i];
 
   }
 }
@@ -45,11 +47,11 @@ if (process.argv[2] === "concert-this") {
     if (!error && response.statusCode === 200) {
       var bandData = JSON.parse(body)
       //console log band and event information
-      console.log(queryBand);
-      console.log(bands);
-      console.log("Venue: " + bandData[0].venue.name)
-      console.log("Venue Location: " + bandData[0].venue.city + " " + bandData[0].venue.country)
-      console.log("Date of Event: " + moment(bandData[0].datetime).format("MM/DD/YYYY"))
+      console.log("\n" + queryBand);
+      console.log("\n" + args);
+      console.log("\nVenue: " + bandData[0].venue.name)
+      console.log("\nVenue Location: " + bandData[0].venue.city + " " + bandData[0].venue.country)
+      console.log("\nDate of Event: " + moment(bandData[0].datetime).format("MM/DD/YYYY"))
      
     }
   });
@@ -64,16 +66,16 @@ if (process.argv[2] === "movie-this") {
 
       // Parse the body of the site and recover just the imdbRating
       // (Note: The syntax below for parsing isn't obvious. Just spend a few moments dissecting it).
-      console.log(queryMovie);
-      console.log(movies);
-      console.log("Movie Titile: " + JSON.parse(body).Title);
-      console.log("Release Year: " + JSON.parse(body).Year);
-      console.log("IMDB Rating: " + JSON.parse(body).Ratings[0].Value);
-      console.log("Rotten Tomatoes Rating: " + JSON.parse(body).Ratings[1].Value);
-      console.log("Country of Origin: " + JSON.parse(body).Country);
-      console.log("Language: " + JSON.parse(body).Language);
-      console.log("Plot: " + JSON.parse(body).Plot);
-      console.log("Actors: " + JSON.parse(body).Actors);
+      console.log("\n" + queryMovie);
+      // console.log("\n" + movies);
+      console.log("\nMovie Titile: " + JSON.parse(body).Title);
+      console.log("\nRelease Year: " + JSON.parse(body).Year);
+      console.log("\nIMDB Rating: " + JSON.parse(body).Ratings[0].Value);
+      console.log("\nRotten Tomatoes Rating: " + JSON.parse(body).Ratings[1].Value);
+      console.log("\nCountry of Origin: " + JSON.parse(body).Country);
+      console.log("\nLanguage: " + JSON.parse(body).Language);
+      console.log("\nPlot: " + JSON.parse(body).Plot);
+      console.log("\nActors: " + JSON.parse(body).Actors);
     }
   });
 }
