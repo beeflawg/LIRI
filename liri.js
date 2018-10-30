@@ -12,41 +12,45 @@ var spotify = new Spotify(keys.spotify);
 var nodeArgs = process.argv;
 
 // Create an empty variable for holding the movie name
-var args = "";
+var bands = "";
+var movies = "";
+var songs = "";
 
 for (var i = 3; i < nodeArgs.length; i++) {
 
   if (i > 3 && i < nodeArgs.length) {
 
-    args = args + "+" + nodeArgs[i];
-
+    movies = movies + " " + nodeArgs[i];
+    bands = bands + "%20" + nodeArgs[i];
+    songs = songs + " " + nodeArgs[i];
   }
 
   else {
 
-    args += nodeArgs[i];
+    movies += nodeArgs[i];
+    bands += nodeArgs[i];
+    songs += nodeArgs[i];
 
   }
 }
 
-var queryBand = "https://rest.bandsintown.com/artists/" + args + "/events?app_id=codingbootcamp";
-var queryMovie = "http://www.omdbapi.com/?t=" + args + "&y=&plot=short&apikey=trilogy";
+var queryBand = "https://rest.bandsintown.com/artists/" + bands + "/events?app_id=codingbootcamp";
+var queryMovie = "http://www.omdbapi.com/?t=" + movies + "&y=&plot=short&apikey=trilogy";
 
-// This line is just to help us debug against the actual URL.
-console.log(queryBand);
-console.log(queryMovie);
-console.log(args);
 
 if (process.argv[2] === "concert-this") {
   request(queryBand, function (error, response, body) {
 
 
     if (!error && response.statusCode === 200) {
-
-
-      // console.log("Venue: " + body.venue.name)
+      
+      //console log band and event information
+      console.log(queryBand);
+      console.log(bands);
+      // console.log(JSON.parse(body))
+      console.log("Venue: " + body[2].venue)
       // console.log("Venue Location: " + body.venue.city + " " + body.venue.country)
-      console.log("Date of Event: " + body.venue)
+      // console.log("Date of Event: " + body.venue)
       // console.log(body);
     }
   });
@@ -61,6 +65,8 @@ if (process.argv[2] === "movie-this") {
 
       // Parse the body of the site and recover just the imdbRating
       // (Note: The syntax below for parsing isn't obvious. Just spend a few moments dissecting it).
+      console.log(queryMovie);
+      console.log(movies);
       console.log("Movie Titile: " + JSON.parse(body).Title);
       console.log("Release Year: " + JSON.parse(body).Year);
       console.log("IMDB Rating: " + JSON.parse(body).Ratings[0].Value);
@@ -74,13 +80,9 @@ if (process.argv[2] === "movie-this") {
 }
 
 if (process.argv[2] === "spotify-this-song") {
-  // spotify.search({ type: "track", query: args }, function(err, data) {
-  // if (err) {
-  //   return console.log('Error occurred: ' + err);
-  // }
 
   spotify
-    .request('https://api.spotify.com/v1/search?q=' + args + '&type=track')
+    .request('https://api.spotify.com/v1/search?q=' + songs + '&type=track')
     .then(function (data) {
       console.log(data);
       // console.log(data.artists);
@@ -91,10 +93,7 @@ if (process.argv[2] === "spotify-this-song") {
     .catch(function (err) {
       console.error('Error occurred: ' + err);
     });
-  //
 
-
-  // });
 }
 
 if (process.argv[2] === "do-what-it-says") {
