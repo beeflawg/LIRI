@@ -82,18 +82,13 @@ if (process.argv[2] === "movie-this") {
 
 if (process.argv[2] === "spotify-this-song") {
 
-  spotify
-    .request('https://api.spotify.com/v1/search?q=' + songs + '&type=track')
-    .then(function (data) {
-      console.log(data);
-      // console.log(data.artists);
-      // console.log(data.track);
-      // console.log(data.url);
-      // console.log(data.album);
-    })
-    .catch(function (err) {
-      console.error('Error occurred: ' + err);
-    });
+  spotify.search({ type: 'track', query: songs }, function(err, data) {
+    if (err) {
+      return console.log('Error occurred: ' + err);
+    }
+   
+  console.log(data); 
+  });
 
 }
 
